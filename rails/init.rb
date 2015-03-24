@@ -21,3 +21,15 @@ Redmine::Plugin.register :customer_plugin do
   menu :top_menu, :customers, {:controller => 'customers', :action => 'index'}, :caption => :label_customer_plural
   menu :project_menu, :customers, {:controller => 'customers', :action => 'show'}, :caption => :customer_title
 end
+
+if Rails::VERSION::MAJOR >= 3
+  ActionDispatch::Callbacks.to_prepare do
+    require_dependency 'issue'
+  end
+else
+  Dispatcher.to_prepare :customer_plugin do
+    require_dependency 'issue'
+  end
+end
+
+Issue.send(:include, CustomerPlugin::IssuePatch)
