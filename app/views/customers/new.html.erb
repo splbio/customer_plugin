@@ -2,13 +2,7 @@
 
 <h2><%= l(:label_customer_new) %></h2>
 
-<%= labelled_form_for :customer, @customer, :url =>{:action => 'create', :id => @project} do |f|  %>
+<%= labelled_form_for @customer do |f|  %>
   <%= render :partial => 'form', :locals => {:f => f}  %>
   <%= submit_tag l(:button_save) -%>
 <% end -%>
-
-<% content_for(:header_tags) do %>
-  <style type="text/css">
-    .icon-users { background-image: url(../../images/users.png); }
-  </style>
-<% end %>

@@ -1,9 +1,9 @@
 Rails.application.routes.draw do
   # Project
-#  get "customers/:customer_id", :to => "customers#show"
-  get "customers/select", :to => "customers#select"
-  post "customers/assign", :to => "customers#assign"
+  get "projects/:id/customer", :to => "customers#show"
+  get "projects/:id/customer/select", :to => "customers#select"
+  post "projects/:id/customer", :to => "customers#assign"
 
   # Global
-  resources :customers
+  resources :customers, :except => :show
 end
