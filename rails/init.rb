@@ -1,8 +1,6 @@
 # Redmine customer plugin
 require 'redmine'
 
-RAILS_DEFAULT_LOGGER.info 'Starting Customer plugin for RedMine'
-
 Redmine::Plugin.register :customer_plugin do
   name 'Customer plugin'
   author 'Eric Davis'
