@@ -10,6 +10,8 @@ class Customer < ActiveRecord::Base
     :allow_nil => true, :allow_blank => true
   #TODO validate website address
   #TODO validate skype_name contact
+
+  attr_accessible :name, :company, :address, :phone, :email, :website, :skype_name
   
    def pretty_name
      result = []

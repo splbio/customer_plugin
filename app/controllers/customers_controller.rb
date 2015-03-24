@@ -1,20 +1,20 @@
 class CustomersController < ApplicationController
   unloadable
   layout 'base'
-  before_filter :find_project, :authorize
+  before_filter :find_project, :only => [:select, :assign]
+  before_filter :authorize, :only => [:select, :assign]
+  before_filter :authorize_global
   before_filter :find_customer, :only => [:edit, :update, :destroy]
-  before_filter :find_customers, :only => [:list, :select]
+  before_filter :find_customers, :only => [:index, :select]
  
   def show
     @customer = Customer.find_by_id(@project.customer_id)
   end
   
-  def list
-    #@customers = Customer.find(:all)
+  def index
   end
 
   def select
-    #@customers = Customer.find(:all)
   end
   
   def assign
@@ -29,27 +29,24 @@ class CustomersController < ApplicationController
   end
     
   def edit
-    #@customer = Customer.find_by_id(params[:customer_id])
   end
 
   def update
-    #@customer = Customer.find_by_id(params[:customer_id])
-    if @customer.update_attributes(params[:customer])
+    if @customer.update_attributes(customer_params)
       flash[:notice] = l(:notice_successful_update)
-      redirect_to :action => "list", :id => params[:id]
+      redirect_to :action => "index"
     else
-      render :action => "edit", :id => params[:id]
+      render :action => "edit"
     end
   end
 
   def destroy
-    #@customer = Customer.find_by_id(params[:customer_id])
     if @customer.destroy
       flash[:notice] = l(:notice_successful_delete)
     else
       flash[:error] = l(:notice_unsuccessful_save)
     end
-    redirect_to :action => "list", :id => params[:id]
+    redirect_to :action => "index"
   end
   
   def new
@@ -57,12 +54,12 @@ class CustomersController < ApplicationController
   end
 
   def create
-    @customer = Customer.new(params[:customer])
+    @customer = Customer.new(customer_params)
     if @customer.save
       flash[:notice] = l(:notice_successful_create)
-      redirect_to :action => "select", :id => params[:id]
+      redirect_to :action => "index"
     else
-      render :action => "new", :id => params[:id]
+      render :action => "new"
     end
   end
   
@@ -75,13 +72,17 @@ class CustomersController < ApplicationController
   end
 
   def find_customer
-    @customer = Customer.find_by_id(params[:customer_id])
+    @customer = Customer.find_by_id(params[:id])
   rescue ActiveRecord::RecordNotFound
     render_404
   end
   
   def find_customers
-    @customers = Customer.find(:all) || []
+    @customers = Customer.all
   end
 
+  def customer_params
+    params.require(:customer).
+      permit(:name, :company, :address, :phone, :email, :website, :skype_name)
+  end
 end

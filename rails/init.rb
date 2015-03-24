@@ -14,9 +14,10 @@ Redmine::Plugin.register :customer_plugin do
   project_module :customer_module do
     permission :view_customer, {:customers => [:show]}
     permission :assign_customer, {:customers => [:assign, :select]}
-    permission :see_customer_list, {:customers => [:list]}
+    permission :see_customer_list, {:customers => [:index]}
     permission :edit_customer, {:customers => [:edit, :update, :new, :create, :destroy]}
   end
 
+  menu :top_menu, :customers, {:controller => 'customers', :action => 'index'}, :caption => :label_customer_plural
   menu :project_menu, :customers, {:controller => 'customers', :action => 'show'}, :caption => :customer_title
 end
