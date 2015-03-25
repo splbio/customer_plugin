@@ -1,19 +1,5 @@
 <hr />
-<div class="customers">
-  <div class="contextual">
-    <%= toggle_link l(:button_add), 'new-relation-form', {:focus => 'relation_issue_to_id'} %>
-  </div>
-
-  <p><strong><%=l(:label_customer_plural)%></strong></p>
-
-  <table class="">
-    <% issue.customers.each do |customer| %>
-      <tr>
-        <td><%= h(customer.pretty_name) %></td>
-      </tr>
-    <% end %>
-  </table>
-
+<div class="customers-issues">
+  <%= render :partial => 'customers/issue_customers_table', :locals => {:issue => @issue} %>
 </div>
 
-<%# TODO: form to connect toggle to %>

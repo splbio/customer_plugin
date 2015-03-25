@@ -1,0 +1,4 @@
+$('.customers-issues').html('<%= escape_javascript(render :partial => 'customers/issue_customers_table', :locals => {:issue => @issue}) %>');
+$('#customer_issue_customer_id').val('');
+$('#customer_issue_customer_id').focus();
+$('#new-customer-issue-form').show();

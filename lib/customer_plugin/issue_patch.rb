@@ -7,7 +7,7 @@ module CustomerPlugin
       base.class_eval do
         unloadable
 
-        has_and_belongs_to_many :customers
+        has_and_belongs_to_many :customers, :uniq => true
       end
     end
 

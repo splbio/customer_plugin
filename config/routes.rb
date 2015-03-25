@@ -6,4 +6,5 @@ Rails.application.routes.draw do
 
   # Global
   resources :customers, :except => :show
+  resource :customer_issues, :only => [:create, :destroy]
 end

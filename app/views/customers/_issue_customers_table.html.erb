@@ -1,0 +1,30 @@
+  <div class="contextual">
+    <%= toggle_link l(:button_add), 'new-customer-issue-form', {:focus => 'customer_issue_customer_id'} %>
+  </div>
+
+  <p><strong><%=l(:label_customer_plural)%></strong></p>
+
+  <table class="list">
+    <% issue.customers.each do |customer| %>
+      <tr id="customer_issue-<%= issue.id %>-<%= customer.id %>">
+        <td style="width: 80%; text-align: left;"><%= h(customer.pretty_name) %></td>
+        <td class="buttons">
+          <%= link_to image_tag('link_break.png'),
+              customer_issues_path(:customer_issue => {:issue_id => issue.id, :customer_id => customer.id}),
+                                   :remote => true,
+                                   :method => :delete,
+                                   :data => {:confirm => l(:text_are_you_sure)},
+                                   :title => l(:label_customer_issue_delete) %>
+        </td>
+      </tr>
+    <% end %>
+  </table>
+
+<%= form_for :customer_issue, {
+                 :remote => true,
+                 :url => customer_issues_path,
+                 :method => :post,
+                 :html => {:id => 'new-customer-issue-form', :style => 'display: none;'}
+               } do |f| %>
+<%= render :partial => 'customers/customer_issue_form', :locals => {:f => f, :issue => issue}%>
+<% end %>
