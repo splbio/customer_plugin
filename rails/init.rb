@@ -16,8 +16,24 @@ Redmine::Plugin.register :customer_plugin do
     permission :assign_customer, {:customers => [:assign, :select]}
     permission :see_customer_list, {:customers => [:index]}
     permission :edit_customer, {:customers => [:edit, :update, :new, :create, :destroy]}
+    permission :assign_customer_to_issue, {:customers => [:autocomplete], :customer_issues => [:create, :destroy]}
+
   end
 
   menu :top_menu, :customers, {:controller => 'customers', :action => 'index'}, :caption => :label_customer_plural
   menu :project_menu, :customers, {:controller => 'customers', :action => 'show'}, :caption => :customer_title
 end
+
+if Rails::VERSION::MAJOR >= 3
+  ActionDispatch::Callbacks.to_prepare do
+    require_dependency 'issue'
+  end
+else
+  Dispatcher.to_prepare :customer_plugin do
+    require_dependency 'issue'
+  end
+end
+
+Issue.send(:include, CustomerPlugin::IssuePatch)
+
+require 'customer_plugin/view_issues_show_description_bottom_hook'

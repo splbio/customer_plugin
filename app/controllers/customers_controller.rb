@@ -1,7 +1,7 @@
 class CustomersController < ApplicationController
   unloadable
   layout 'base'
-  before_filter :find_project, :only => [:show, :select, :assign]
+  before_filter :find_project, :only => [:show, :select, :assign, :autocomplete]
   before_filter :authorize, :only => [:select, :assign]
   before_filter :authorize_global
   before_filter :find_customer, :only => [:edit, :update, :destroy]
@@ -64,7 +64,18 @@ class CustomersController < ApplicationController
       render :action => "new"
     end
   end
-  
+
+  def autocomplete
+    @customers = Customer.search(params[:term])
+
+    render(:json => @customers.collect { |customer|
+             {
+               'label' => customer.pretty_name,
+               'value' => customer.id
+             }
+           })
+  end
+
   private
   
   def find_project

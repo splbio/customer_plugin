@@ -1,0 +1,8 @@
+<%= l(:label_customer) %> <%= f.text_field :customer_id, :size => 10 %>
+<%= f.hidden_field :issue_id, :value => issue.id %>
+<%= submit_tag l(:button_add) %>
+<%= link_to_function l(:button_cancel), '$("#new-customer-issue-form").hide();'%>
+</p>
+
+<%= javascript_tag "observeAutocompleteField('customer_issue_customer_id', '#{escape_javascript autocomplete_customers_path(:id => @project)}');" %>
+

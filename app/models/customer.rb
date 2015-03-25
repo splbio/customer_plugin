@@ -1,5 +1,6 @@
 class Customer < ActiveRecord::Base
   has_many :projects
+  has_and_belongs_to_many :issues, :uniq => true
   
   # name or company is mandatory
   validates_presence_of :name, :if => :company_unsetted
@@ -21,8 +22,16 @@ class Customer < ActiveRecord::Base
      
      return result.join(", ")
    end
-  
-  private
+
+   # Search for customers with a name or company matching term
+   def self.search(term)
+     self.order(:id).
+       where("LOWER(#{Customer.table_name}.name) LIKE LOWER(:term) " +
+             "OR LOWER(#{Customer.table_name}.company) LIKE LOWER(:term) ",
+             :term => "%#{term}%")
+   end
+
+   private
   
   def name_unsetted
     self.name.blank?
@@ -32,4 +41,17 @@ class Customer < ActiveRecord::Base
     self.company.blank?
   end
 
+  if Rails.env.test?
+    def self.generate!(attributes={})
+      @generated_name ||= "John Doe 0"
+      @generated_name.succ!
+      customer = Customer.new(attributes)
+      customer.name ||= @generated_name
+      yield customer if block_given?
+      customer.save!
+      customer
+    end
+  end
+
+  
 end

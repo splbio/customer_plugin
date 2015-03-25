@@ -18,3 +18,4 @@ en:
   field_customer_skype: Skype
   notice_successful_save: Saved
   notice_unsuccessful_save: Could not save
+  label_customer_issue_delete: Delete customer from issue
