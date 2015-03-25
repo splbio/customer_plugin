@@ -22,8 +22,16 @@ class Customer < ActiveRecord::Base
      
      return result.join(", ")
    end
-  
-  private
+
+   # Search for customers with a name or company matching term
+   def self.search(term)
+     self.order(:id).
+       where("LOWER(#{Customer.table_name}.name) LIKE LOWER(:term) " +
+             "OR LOWER(#{Customer.table_name}.company) LIKE LOWER(:term) ",
+             :term => "%#{term}%")
+   end
+
+   private
   
   def name_unsetted
     self.name.blank?

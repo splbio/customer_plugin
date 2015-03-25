@@ -4,5 +4,5 @@
 <%= link_to_function l(:button_cancel), '$("#new-customer-issue-form").hide();'%>
 </p>
 
-<%= javascript_tag "observeAutocompleteField('relation_issue_to_id', '#{escape_javascript auto_complete_issues_path(:project_id => @project, :scope => (Setting.cross_project_issue_relations? ? 'all' : nil))}')" %>
+<%= javascript_tag "observeAutocompleteField('customer_issue_customer_id', '#{escape_javascript autocomplete_customers_path(:id => @project)}');" %>
 

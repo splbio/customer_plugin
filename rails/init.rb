@@ -16,7 +16,7 @@ Redmine::Plugin.register :customer_plugin do
     permission :assign_customer, {:customers => [:assign, :select]}
     permission :see_customer_list, {:customers => [:index]}
     permission :edit_customer, {:customers => [:edit, :update, :new, :create, :destroy]}
-    permission :assign_customer_to_issue, {:customer_issues => [:create, :destroy]}
+    permission :assign_customer_to_issue, {:customers => [:autocomplete], :customer_issues => [:create, :destroy]}
 
   end
 

@@ -5,6 +5,10 @@ Rails.application.routes.draw do
   post "projects/:id/customer", :to => "customers#assign"
 
   # Global
-  resources :customers, :except => :show
+  resources :customers, :except => :show do
+    collection do
+      get "autocomplete", :to => "customers#autocomplete"
+    end
+  end
   resource :customer_issues, :only => [:create, :destroy]
 end
