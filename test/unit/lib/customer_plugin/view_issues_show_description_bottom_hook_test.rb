@@ -14,6 +14,10 @@ class CustomerPlugin::ViewIssuesShowDescriptionBottomTest < ActionController::Te
   def controller
     @controller ||= ApplicationController.new
     @controller.response ||= ActionController::TestResponse.new
+    # Override Redmine's override of Rails so layouts aren't rendered or checked in hook renders
+    def @controller._include_layout?(*args)
+      false
+    end
     @controller
   end
 
@@ -66,6 +70,12 @@ class CustomerPlugin::ViewIssuesShowDescriptionBottomTest < ActionController::Te
       @response.body = hook(:issue => @issue)
 
       assert_select 'p strong', :text => 'Customer List'
+    end
+
+    should "return an Add link" do
+      @response.body = hook(:issue => @issue)
+
+      assert_select 'a', :text => 'Add'
     end
 
     context "for an issue with customers" do

@@ -14,24 +14,10 @@ module CustomerPlugin
       return '' if context[:issue].project.nil?
       return '' unless User.current.allowed_to?(:view_customer, context[:issue].project)
       
-      html = '<hr />'
-      inner_section = ''
-      inner_section << content_tag(:p, content_tag(:strong, l(:label_customer_plural)))
-
-      if context[:issue].customers.present?
-        items = context[:issue].customers.inject('') do |list, customer|
-          list << content_tag(:tr,
-                              content_tag(:td,
-                                          customer.pretty_name))
-          list
-        end
-        
-        inner_section << content_tag(:table, items.html_safe, :style => 'width: 100%')
-      end
-      
-      html << content_tag(:div, inner_section.html_safe, :class => 'customers')
-
-      return html
+      return context[:controller].send(:render_to_string,
+                                       :partial => 'customers/issue_section',
+                                       :layout => false,
+                                       :locals => {:issue => context[:issue]})
     end
   end
 end
