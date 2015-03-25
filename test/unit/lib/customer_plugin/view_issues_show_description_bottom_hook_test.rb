@@ -18,6 +18,9 @@ class CustomerPlugin::ViewIssuesShowDescriptionBottomTest < ActionController::Te
     def @controller._include_layout?(*args)
       false
     end
+    def @controller.url_options
+      {}
+    end
     @controller
   end
 
@@ -63,7 +66,7 @@ class CustomerPlugin::ViewIssuesShowDescriptionBottomTest < ActionController::Te
     should "return a div for the section" do
       @response.body = hook(:issue => @issue)
       
-      assert_select 'div.customers'
+      assert_select 'div.customers-issues'
     end
 
     should "return the label for the section" do
