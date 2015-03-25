@@ -12,7 +12,7 @@ class Customer < ActiveRecord::Base
   #TODO validate website address
   #TODO validate skype_name contact
 
-  attr_accessible :name, :company, :address, :phone, :email, :website, :skype_name
+  attr_accessible :name, :company, :address, :phone, :email, :website, :skype_name, :external_id
   
    def pretty_name
      result = []

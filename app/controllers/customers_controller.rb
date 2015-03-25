@@ -96,6 +96,6 @@ class CustomersController < ApplicationController
 
   def customer_params
     params.require(:customer).
-      permit(:name, :company, :address, :phone, :email, :website, :skype_name)
+      permit(:name, :company, :address, :phone, :email, :website, :skype_name, :external_id)
   end
 end

@@ -16,6 +16,7 @@ en:
   field_customer_email: Email
   field_customer_website: Website
   field_customer_skype: Skype
+  field_customer_external_id: "External id (e.g. Salesforce id, CRM url)"
   notice_successful_save: Saved
   notice_unsuccessful_save: Could not save
   label_customer_issue_delete: Delete customer from issue
