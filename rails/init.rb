@@ -33,3 +33,5 @@ else
 end
 
 Issue.send(:include, CustomerPlugin::IssuePatch)
+
+require 'customer_plugin/view_issues_show_description_bottom_hook'

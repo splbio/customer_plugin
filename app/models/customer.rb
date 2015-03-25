@@ -33,4 +33,17 @@ class Customer < ActiveRecord::Base
     self.company.blank?
   end
 
+  if Rails.env.test?
+    def self.generate!(attributes={})
+      @generated_name ||= "John Doe 0"
+      @generated_name.succ!
+      customer = Customer.new(attributes)
+      customer.name ||= @generated_name
+      yield customer if block_given?
+      customer.save!
+      customer
+    end
+  end
+
+  
 end
